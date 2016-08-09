@@ -192,7 +192,7 @@ public class BackgroundServicePluginLogic {
 
 				if (ACTION_GET_STATUS.equals(action)) result = service.getStatus();
 
-				if (ACTION_GET_CLEAR_ACTIVE_VIEW.equals(action)) result = service.clearActiveView();
+				if (ACTION_CLEAR_ACTIVE_VIEW.equals(action)) result = service.clearActiveView();
 				
 				if (ACTION_START_SERVICE.equals(action)) result = service.startService();
 
@@ -822,8 +822,8 @@ public class BackgroundServicePluginLogic {
                                 Log.e(LOCALTAG, "2. ************************ getActiveView 1");
 				if(extras != null){
                                 	Log.e(LOCALTAG, "3. ************************ getActiveView 1");
-					j = extras.getString("startView");
-					String data = mApi.getActiveView(j);
+					String viewKey = extras.getString("startView");
+					String data = mApi.getActiveView(viewKey);
 					result = new JSONObject(data);
                                 	Log.e(LOCALTAG, "4. ************************ getActiveView 1");
 				}
