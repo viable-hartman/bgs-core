@@ -15,6 +15,10 @@ interface BackgroundServiceApi {
 	
 	void disableTimer();
 	
+	void clearActiveView(String viewKey);
+
+	String getActiveView(String viewKey);
+
 	String getConfiguration();
 	
 	void setConfiguration(String configuration);

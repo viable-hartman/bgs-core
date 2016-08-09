@@ -231,6 +231,20 @@ public abstract class BackgroundService extends Service {
 		}
 
 		@Override
+		public void clearActiveView(String viewKey) throws RemoteException {
+			clearView(viewKey);
+		}
+
+		@Override
+		public String getActiveView(String viewKey) throws RemoteException {
+			JSONObject array = getView(viewKey);
+			if (array == null)
+				return "";
+			else 
+				return array.toString();
+		}
+
+		@Override
 		public String getConfiguration() throws RemoteException {
 			JSONObject array = getConfig();
 			if (array == null)
@@ -411,6 +425,8 @@ public abstract class BackgroundService extends Service {
 	 */
 	protected abstract JSONObject initialiseLatestResult(); 
 	protected abstract JSONObject doWork();
+	protected abstract void clearView(String viewKey);
+	protected abstract JSONObject getView(String viewKey);
 	protected abstract JSONObject getConfig();
 	protected abstract void setConfig(JSONObject config);
 	

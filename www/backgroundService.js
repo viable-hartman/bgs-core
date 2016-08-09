@@ -160,6 +160,20 @@ BackgroundServiceFactory.prototype.create = function (serviceName) {
 						[this.getServiceName()]);
 	};
 
+	/**
+	  * Clear the ActiveView requested by the service (i.e. after route)
+	  * 
+	  * @param successCallback The callback which will be called if the method is successful
+	  * @param failureCallback The callback which will be called if the method encounters an error
+	  */
+	BackgroundService.prototype.clearActiveView = function(successCallback, failureCallback) { 
+		return exec(	successCallback,      
+						failureCallback,      
+						'BackgroundServicePlugin',      
+						'clearActiveView',      
+						[this.getServiceName()]);
+	};
+
 
 	/**
 	  * Returns the status of the service

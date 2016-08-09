@@ -17,6 +17,10 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.content.ServiceConnection;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+
 public class BackgroundServicePluginLogic {
 
 	/*
@@ -43,6 +47,7 @@ public class BackgroundServicePluginLogic {
 	public static final String ACTION_DEREGISTER_FOR_BOOTSTART = "deregisterForBootStart";
 	
 	public static final String ACTION_GET_STATUS = "getStatus";
+	public static final String ACTION_CLEAR_ACTIVE_VIEW = "clearActiveView";
 
 	public static final String ACTION_RUN_ONCE = "runOnce";
 
@@ -137,6 +142,9 @@ public class BackgroundServicePluginLogic {
 		
 		if(ACTION_GET_STATUS.equals(action)) result = true;
 
+		if(ACTION_CLEAR_ACTIVE_VIEW.equals(action)) result = true;
+		if(ACTION_GET_ACTIVE_VIEW.equals(action)) result = true;
+
 		if(ACTION_RUN_ONCE.equals(action)) result = true;
 		
 		if(ACTION_REGISTER_FOR_UPDATES.equals(action)) result = true;
@@ -184,6 +192,8 @@ public class BackgroundServicePluginLogic {
 					service.initialise();
 
 				if (ACTION_GET_STATUS.equals(action)) result = service.getStatus();
+
+				if (ACTION_GET_CLEAR_ACTIVE_VIEW.equals(action)) result = service.clearActiveView();
 				
 				if (ACTION_START_SERVICE.equals(action)) result = service.startService();
 
@@ -438,6 +448,31 @@ public class BackgroundServicePluginLogic {
 			return result;
 		}
 		
+		public ExecuteResult clearActiveView(JSONArray data)
+		{
+			ExecuteResult result = null;
+			try {
+                                Log.e(LOCALTAG, "1. ************************ clearActiveView 1");
+				Activity mActivity = ((Activity)this.mContext);
+                                // Append App route in configuration.
+                                Bundle extras = mActivity.getIntent().getExtras();
+                                Log.e(LOCALTAG, "2. ************************ clearActiveView 1");
+				if(extras != null){
+                                	Log.e(LOCALTAG, "3. ************************ clearActiveView 1");
+					j = extras.getString("startView");
+					//mActivity.getIntent().removeExtra("startView");
+					String data = mApi.clearActiveView(j);
+                                	Log.e(LOCALTAG, "4. ************************ clearActiveView 1");
+					result = new ExecuteResult(ExecuteStatus.OK, createJSONResult(true, ERROR_NONE_CODE, ERROR_NONE_MSG));
+				}
+                               	Log.e(LOCALTAG, "5. ************************ clearActiveView 1");
+			} catch (Exception ex) {
+				Log.d(LOCALTAG, "clearActiveView failed", ex);
+				result = new ExecuteResult(ExecuteStatus.ERROR, createJSONResult(false, ERROR_EXCEPTION_CODE, ex.getMessage()));
+			}
+			return result;
+		}
+
 		public ExecuteResult setConfiguration(JSONArray data)
 		{
 			ExecuteResult result = null;
@@ -707,6 +742,7 @@ public class BackgroundServicePluginLogic {
 				try { result.put("ServiceRunning", true); } catch (Exception ex) {Log.d(LOCALTAG, "Adding ServiceRunning to JSONObject failed", ex);};
 				try { result.put("TimerEnabled", isTimerEnabled()); } catch (Exception ex) {Log.d(LOCALTAG, "Adding TimerEnabled to JSONObject failed", ex);};
 				try { result.put("Configuration", getConfiguration()); } catch (Exception ex) {Log.d(LOCALTAG, "Adding Configuration to JSONObject failed", ex);};
+				try { result.put("Route", getActiveView()); } catch (Exception ex) {Log.d(LOCALTAG, "Adding Route to JSONObject failed", ex);};
 				try { result.put("LatestResult", getLatestResult()); } catch (Exception ex) {Log.d(LOCALTAG, "Adding LatestResult to JSONObject failed", ex);};
 				try { result.put("TimerMilliseconds", getTimerMilliseconds()); } catch (Exception ex) {Log.d(LOCALTAG, "Adding TimerMilliseconds to JSONObject failed", ex);};
 			} else {
@@ -774,6 +810,30 @@ public class BackgroundServicePluginLogic {
 				return false;
 			else
 				return true;
+		}
+
+		private JSONObject getActiveView()
+		{
+			JSONObject result = null;
+			try {
+                                Log.e(LOCALTAG, "1. ************************ getActiveView 1");
+				Activity mActivity = ((Activity)this.mContext);
+                                // Append App route in configuration.
+                                Bundle extras = mActivity.getIntent().getExtras();
+                                Log.e(LOCALTAG, "2. ************************ getActiveView 1");
+				if(extras != null){
+                                	Log.e(LOCALTAG, "3. ************************ getActiveView 1");
+					j = extras.getString("startView");
+					String data = mApi.getActiveView(j);
+					result = new JSONObject(data);
+                                	Log.e(LOCALTAG, "4. ************************ getActiveView 1");
+				}
+                               	Log.e(LOCALTAG, "5. ************************ getActiveView 1");
+			} catch (Exception ex) {
+				Log.d(LOCALTAG, "getActiveView failed", ex);
+			}
+
+			return result;
 		}
 
 		private JSONObject getConfiguration()
