@@ -143,7 +143,6 @@ public class BackgroundServicePluginLogic {
 		if(ACTION_GET_STATUS.equals(action)) result = true;
 
 		if(ACTION_CLEAR_ACTIVE_VIEW.equals(action)) result = true;
-		if(ACTION_GET_ACTIVE_VIEW.equals(action)) result = true;
 
 		if(ACTION_RUN_ONCE.equals(action)) result = true;
 		
@@ -448,7 +447,7 @@ public class BackgroundServicePluginLogic {
 			return result;
 		}
 		
-		public ExecuteResult clearActiveView(JSONArray data)
+		public ExecuteResult clearActiveView()
 		{
 			ExecuteResult result = null;
 			try {
@@ -459,9 +458,9 @@ public class BackgroundServicePluginLogic {
                                 Log.e(LOCALTAG, "2. ************************ clearActiveView 1");
 				if(extras != null){
                                 	Log.e(LOCALTAG, "3. ************************ clearActiveView 1");
-					j = extras.getString("startView");
+					String viewKey = extras.getString("startView");
 					//mActivity.getIntent().removeExtra("startView");
-					String data = mApi.clearActiveView(j);
+					mApi.clearActiveView(viewKey);
                                 	Log.e(LOCALTAG, "4. ************************ clearActiveView 1");
 					result = new ExecuteResult(ExecuteStatus.OK, createJSONResult(true, ERROR_NONE_CODE, ERROR_NONE_MSG));
 				}
