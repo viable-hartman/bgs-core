@@ -823,10 +823,10 @@ public class BackgroundServicePluginLogic {
                                 Bundle extras = mActivity.getIntent().getExtras();
 				if(extras != null) {
 					String viewKey = extras.getString("startView");
-					Log.e(LOCALTAG, "*******************"+viewKey);
+					//Log.e(LOCALTAG, "*******************"+viewKey);
 					int notificationId = extras.getInt("notificationId");
 					String notificationMsg = extras.getString("notificationMsg");
-					Log.e(LOCALTAG, "*******************"+notificationMsg);
+					//Log.e(LOCALTAG, "*******************"+notificationMsg);
 					result = new JSONObject();
                                         result.put("View", viewKey);
                                         result.put("From", notificationId);
