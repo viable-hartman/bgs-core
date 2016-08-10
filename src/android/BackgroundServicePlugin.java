@@ -95,6 +95,14 @@ public class BackgroundServicePlugin extends CordovaPlugin implements Background
 	}
 
 	@Override
+	public void onNewIntent(Intent intent) 
+	{
+		super.onNewIntent(intent);
+		Log.e(TAG, "************************* onNewIntent ***************************");
+		Log.e(TAG, "************************* onNewIntent ***************************" + intent.getStringExtra("startView"));
+	}
+
+	@Override
 	public void onDestroy() {
 		super.onDestroy();
 
