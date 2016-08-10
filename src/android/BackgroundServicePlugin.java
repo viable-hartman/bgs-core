@@ -11,6 +11,8 @@ import org.apache.cordova.CordovaPlugin;
 import com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePluginLogic.ExecuteResult;
 import com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePluginLogic.ExecuteStatus;
 
+import android.content.Intent;
+
 public class BackgroundServicePlugin extends CordovaPlugin implements BackgroundServicePluginLogic.IUpdateListener {
 
 	/*
