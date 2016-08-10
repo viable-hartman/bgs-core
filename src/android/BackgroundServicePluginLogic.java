@@ -450,21 +450,28 @@ public class BackgroundServicePluginLogic {
 		public ExecuteResult clearActiveView()
 		{
 			ExecuteResult result = null;
+			//Log.e(LOCALTAG, "1. ****************** clearActiveView");
 			try {
 				Activity mActivity = ((Activity)this.mContext);
+				//Log.e(LOCALTAG, "2. ****************** clearActiveView");
                                 // Append App route in configuration.
                                 Bundle extras = mActivity.getIntent().getExtras();
+				//Log.e(LOCALTAG, "3. ****************** clearActiveView");
 				if(extras != null){
+					//Log.e(LOCALTAG, "4. ****************** clearActiveView");
 					// TODO: Loop and delete all extras or do something smarter to remove extra parmeters.
 					mActivity.getIntent().removeExtra("startView");
 					mActivity.getIntent().removeExtra("notificationId");
 					mActivity.getIntent().removeExtra("notificationMsg");
+					//Log.e(LOCALTAG, "5. ****************** clearActiveView");
 					result = new ExecuteResult(ExecuteStatus.OK, createJSONResult(true, ERROR_NONE_CODE, ERROR_NONE_MSG));
 				}
+				//Log.e(LOCALTAG, "6. ****************** clearActiveView");
 			} catch (Exception ex) {
 				Log.d(LOCALTAG, "clearActiveView failed", ex);
 				result = new ExecuteResult(ExecuteStatus.ERROR, createJSONResult(false, ERROR_EXCEPTION_CODE, ex.getMessage()));
 			}
+			//Log.e(LOCALTAG, "7. ****************** clearActiveView");
 			return result;
 		}
 

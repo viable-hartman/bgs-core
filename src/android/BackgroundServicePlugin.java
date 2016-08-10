@@ -11,8 +11,6 @@ import org.apache.cordova.CordovaPlugin;
 import com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePluginLogic.ExecuteResult;
 import com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePluginLogic.ExecuteStatus;
 
-import android.content.Intent;
-
 public class BackgroundServicePlugin extends CordovaPlugin implements BackgroundServicePluginLogic.IUpdateListener {
 
 	/*
@@ -94,14 +92,6 @@ public class BackgroundServicePlugin extends CordovaPlugin implements Background
 		}
 
 		return result;
-	}
-
-	@Override
-	public void onNewIntent(Intent intent) 
-	{
-		super.onNewIntent(intent);
-		Log.e(TAG, "************************* onNewIntent ***************************");
-		Log.e(TAG, "************************* onNewIntent ***************************" + intent.getStringExtra("startView"));
 	}
 
 	@Override
