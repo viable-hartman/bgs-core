@@ -451,20 +451,20 @@ public class BackgroundServicePluginLogic {
 		{
 			ExecuteResult result = null;
 			try {
-                                Log.e(LOCALTAG, "1. ************************ clearActiveView 1");
+                                //Log.e(LOCALTAG, "1. ************************ clearActiveView 1");
 				Activity mActivity = ((Activity)this.mContext);
                                 // Append App route in configuration.
                                 Bundle extras = mActivity.getIntent().getExtras();
-                                Log.e(LOCALTAG, "2. ************************ clearActiveView 1");
+                                //Log.e(LOCALTAG, "2. ************************ clearActiveView 1");
 				if(extras != null){
-                                	Log.e(LOCALTAG, "3. ************************ clearActiveView 1");
+                                	//Log.e(LOCALTAG, "3. ************************ clearActiveView 1");
 					String viewKey = extras.getString("startView");
 					//mActivity.getIntent().removeExtra("startView");
 					mApi.clearActiveView(viewKey);
-                                	Log.e(LOCALTAG, "4. ************************ clearActiveView 1");
+                                	//Log.e(LOCALTAG, "4. ************************ clearActiveView 1");
 					result = new ExecuteResult(ExecuteStatus.OK, createJSONResult(true, ERROR_NONE_CODE, ERROR_NONE_MSG));
 				}
-                               	Log.e(LOCALTAG, "5. ************************ clearActiveView 1");
+                               	//Log.e(LOCALTAG, "5. ************************ clearActiveView 1");
 			} catch (Exception ex) {
 				Log.d(LOCALTAG, "clearActiveView failed", ex);
 				result = new ExecuteResult(ExecuteStatus.ERROR, createJSONResult(false, ERROR_EXCEPTION_CODE, ex.getMessage()));
@@ -815,23 +815,17 @@ public class BackgroundServicePluginLogic {
 		{
 			JSONObject result = null;
 			try {
-                                Log.e(LOCALTAG, "1. ************************ getActiveView 1");
 				Activity mActivity = ((Activity)this.mContext);
                                 // Append App route in configuration.
                                 Bundle extras = mActivity.getIntent().getExtras();
-                                Log.e(LOCALTAG, "2. ************************ getActiveView 1");
 				if(extras != null){
-                                	Log.e(LOCALTAG, "3. ************************ getActiveView 1");
 					String viewKey = extras.getString("startView");
 					String data = mApi.getActiveView(viewKey);
 					result = new JSONObject(data);
-                                	Log.e(LOCALTAG, "4. ************************ getActiveView 1");
 				}
-                               	Log.e(LOCALTAG, "5. ************************ getActiveView 1");
 			} catch (Exception ex) {
 				Log.d(LOCALTAG, "getActiveView failed", ex);
 			}
-
 			return result;
 		}
 
