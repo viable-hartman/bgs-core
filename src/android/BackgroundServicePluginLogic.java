@@ -459,7 +459,7 @@ public class BackgroundServicePluginLogic {
 				if(extras != null){
                                 	//Log.e(LOCALTAG, "3. ************************ clearActiveView 1");
 					String viewKey = extras.getString("startView");
-					//mActivity.getIntent().removeExtra("startView");
+					mActivity.getIntent().removeExtra("startView");
 					mApi.clearActiveView(viewKey);
                                 	//Log.e(LOCALTAG, "4. ************************ clearActiveView 1");
 					result = new ExecuteResult(ExecuteStatus.OK, createJSONResult(true, ERROR_NONE_CODE, ERROR_NONE_MSG));
