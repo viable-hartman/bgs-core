@@ -20,6 +20,7 @@ import android.content.ServiceConnection;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.net.Uri;
 
 public class BackgroundServicePluginLogic {
 
@@ -487,7 +488,7 @@ public class BackgroundServicePluginLogic {
 			Intent intent = new Intent(Intent.ACTION_CALL);
 
             intent.setData(Uri.parse("tel:" + phoneNumber));
-            context.startActivity(intent);
+            this.mContext.startActivity(intent);
 			return result;
 		}
 
