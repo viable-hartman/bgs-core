@@ -483,12 +483,16 @@ public class BackgroundServicePluginLogic {
 		public ExecuteResult makeCall(JSONArray data)
 		{
 			ExecuteResult result = null;
-			String phoneNumber = data.get(1).toString();
-			result = new ExecuteResult(ExecuteStatus.OK, createJSONResult(true, ERROR_NONE_CODE, ERROR_NONE_MSG));
-			Intent intent = new Intent(Intent.ACTION_CALL);
-
-            intent.setData(Uri.parse("tel:" + phoneNumber));
-            this.mContext.startActivity(intent);
+			try {
+				String phoneNumber = data.get(1).toString();
+				result = new ExecuteResult(ExecuteStatus.OK, createJSONResult(true, ERROR_NONE_CODE, ERROR_NONE_MSG));
+				Intent intent = new Intent(Intent.ACTION_CALL);
+	            intent.setData(Uri.parse("tel:" + phoneNumber));
+	            this.mContext.startActivity(intent);
+			} catch (JSONException e) {
+						Log.d(LOCALTAG, "Processing phonenumber from make call failed", e);
+						result = new ExecuteResult(ExecuteStatus.ERROR, createJSONResult(false, ERROR_EXCEPTION_CODE, e.getMessage()));
+			}
 			return result;
 		}
 
