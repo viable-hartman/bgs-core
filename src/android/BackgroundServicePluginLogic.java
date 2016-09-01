@@ -41,6 +41,8 @@ public class BackgroundServicePluginLogic {
 	public static final String ACTION_ENABLE_TIMER = "enableTimer";
 	public static final String ACTION_DISABLE_TIMER = "disableTimer";
 
+	public static final String ACTION_MAKE_CALL = "makeCall";
+
 	public static final String ACTION_SET_CONFIGURATION = "setConfiguration";
 	
 	public static final String ACTION_REGISTER_FOR_BOOTSTART = "registerForBootStart";
@@ -191,6 +193,8 @@ public class BackgroundServicePluginLogic {
 					service.initialise();
 
 				if (ACTION_GET_STATUS.equals(action)) result = service.getStatus();
+
+				if (ACTION_MAKE_CALL.equals(action)) result = service.makeCall(data);
 
 				if (ACTION_CLEAR_ACTIVE_VIEW.equals(action)) result = service.clearActiveView();
 				
@@ -472,6 +476,18 @@ public class BackgroundServicePluginLogic {
 				result = new ExecuteResult(ExecuteStatus.ERROR, createJSONResult(false, ERROR_EXCEPTION_CODE, ex.getMessage()));
 			}
 			//Log.e(LOCALTAG, "7. ****************** clearActiveView");
+			return result;
+		}
+
+		public ExecuteResult makeCall(JSONArray data)
+		{
+			ExecuteResult result = null;
+			String phoneNumber = data.get(1).toString();
+			result = new ExecuteResult(ExecuteStatus.OK, createJSONResult(true, ERROR_NONE_CODE, ERROR_NONE_MSG));
+			Intent intent = new Intent(Intent.ACTION_CALL);
+
+            intent.setData(Uri.parse("tel:" + phoneNumber));
+            context.startActivity(intent);
 			return result;
 		}
 

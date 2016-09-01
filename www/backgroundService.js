@@ -104,6 +104,21 @@ BackgroundServiceFactory.prototype.create = function (serviceName) {
 	};
 
 	/**
+	  * Triggers native code to make a phone call
+	  *
+	  * @param phoneNumber string phonenumber to be sent to the service
+	  * @param successCallback The callback which will be called if the method is successful
+	  * @param failureCallback The callback which will be called if the method encounters an error
+	  */
+	BackgroundService.prototype.makeCall = function(phoneNumber, successCallback, failureCallback) { 
+		return exec(	successCallback,      
+						failureCallback,      
+						'BackgroundServicePlugin',      
+						'makeCall',      
+						[this.getServiceName(), phoneNumber]);
+	};
+
+	/**
 	  * Sets the configuration for the service
 	  *
 	  * @param configuration JSONObject to be sent to the service
