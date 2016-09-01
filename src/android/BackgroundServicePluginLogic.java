@@ -143,6 +143,7 @@ public class BackgroundServicePluginLogic {
 		if(ACTION_REGISTER_FOR_BOOTSTART.equals(action)) result = true;
 		if(ACTION_DEREGISTER_FOR_BOOTSTART.equals(action)) result = true;
 		
+		if(ACTION_MAKE_CALL.equals(action)) result = true;
 		if(ACTION_GET_STATUS.equals(action)) result = true;
 
 		if(ACTION_CLEAR_ACTIVE_VIEW.equals(action)) result = true;
