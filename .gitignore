@@ -1,0 +1,3 @@
+build/
+src/android/BackgroundServiceApi.java
+src/android/BackgroundServiceListener.java

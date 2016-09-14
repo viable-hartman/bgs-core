@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="bgs_core">
+    <property name="debuglevel"             value="source,lines,vars"/>
+    <property name="source"                 value="1.8"/>
+    <property name="target"                 value="1.8"/>
+
+    <property name="android.sdk"            value="/opt/Android/Sdk"/>
+    <property name="android.platform.major" value="23"/>
+    <property name="android.platform.minor" value="0"/>
+    <property name="android.platform.rev"   value="2"/>
+    <property name="android.platform"       value="${android.sdk}/platforms/android-${android.platform.major}"/>
+    <property name="android.buildtools"     value="${android.sdk}/build-tools/${android.platform.major}.${android.platform.minor}.${android.platform.rev}"/>
+    <property name="aidl.exe"               value="${android.buildtools}/aidl"/>
+    <property name="aidl.fw"                value="${android.platform}/framework.aidl"/>
+
+    <property name="aidl.path"             value="./aidl/android/com/red_folder/phonegap/plugin/backgroundservice"/>
+    <property name="aidl.file1"             value="BackgroundServiceListener"/>
+    <property name="aidl.file2"             value="BackgroundServiceApi"/>
+
+    <property name="external.lib.dir"       value="../lib"/>
+    <property name="dest.dir"               value="build/com/red_folder/phonegap/plugin/backgroundservice"/>
+    <property name="src.dir"                value="./src/android"/>
+    <property name="aidl.dir"               value="aidl/android/com/red_folder/phonegap/plugin/backgroundservice"/>
+    <property name="build.dir"              value="build"/>
+    <property name="jar.dir"                value="${build.dir}/jar"/>
+    <!-- Could take bgs_core from ${ant.project.name} -->
+    <property name="jar.file"               value="${jar.dir}/bgs_core.jar"/>
+    <property name="manifest.file"          value="${jar.dir}/MANIFEST.MF"/>
+
+    <path id="project.classpath">
+        <!-- Cordova classes exist in Android platform after initial build of cordova project so... -->
+        <!-- cp ./platforms/android/CordovaLib/build/intermediates/bundles/release/classes.jar ~/Development/lib/cordova.jar -->
+        <fileset dir="${external.lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${android.platform}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete file="${src.dir}/${aidl.file1}.java"/>
+        <delete file="${src.dir}/${aidl.file2}.java"/>
+    </target>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${jar.dir}"/>
+        <mkdir dir="${dest.dir}"/>
+    </target>
+
+    <target name="build.aidl" depends="init">
+        <exec executable="${aidl.exe}">
+            <arg value="-I${android.src}"/>
+            <arg value="-p${aidl.fw}"/>
+            <arg value="${aidl.path}/${aidl.file1}.aidl"/>
+        </exec>
+        <exec executable="${aidl.exe}">
+            <arg value="-I${android.src}"/>
+            <arg value="-I./aidl/android"/>
+            <arg value="-p${aidl.fw}"/>
+            <arg value="${aidl.path}/${aidl.file2}.aidl"/>
+        </exec>
+        <move todir="${src.dir}">
+            <fileset dir="${aidl.dir}">
+                <include name="**/*.java"/>
+            </fileset>
+        </move>
+    </target>
+
+    <target name="build" depends="build.aidl">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <path id="src.path">
+            <pathelement location="${src.dir}" />
+        </path>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="${dest.dir}" source="${source}" target="${target}" classpathref="project.classpath">
+            <src refid="src.path"/>
+            <!-- <src path="${src.dir}"/> -->
+        </javac>
+    </target>
+
+
+
+    <target name="jar" depends="build">
+        <delete file="${jar.file}" />
+        <delete file="${manifest.file}" />
+
+        <manifest file="${manifest.file}" >
+            <attribute name="built-by" value="${user.name}" />
+            <!-- <attribute name="Main-Class" value="${main.class}" /> -->
+        </manifest>
+
+        <jar destfile="${jar.file}" basedir="${dest.dir}" manifest="${manifest.file}"></jar>
+    </target>
+</project>
